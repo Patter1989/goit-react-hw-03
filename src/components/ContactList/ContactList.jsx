@@ -2,16 +2,16 @@
 import Contact from "../Contact/Contact";
 
 
-const ContactList = ({ contacts, deleteContact }) => {
+const ContactList = ({ filteredContacts, onDeleteContact }) => {
 	return (
 		<ul>
-			{contacts.map((contact) => (
+			{filteredContacts.map((contact) => (
 				<Contact
 					key={contact.id}
 					id={contact.id}
 					name={contact.name}
 					number={contact.number}
-					deleteContact={deleteContact}
+					onDeleteContact={onDeleteContact}
 				/>
 			))}
 		</ul>

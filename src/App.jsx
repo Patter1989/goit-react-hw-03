@@ -10,7 +10,8 @@ import { nanoid } from "nanoid";
 
 
 const App = () => {
-	const [users, setUsers ] = useState(contacts)
+	const [users, setUsers] = useState(contacts)
+	const [searchedContact, setSearchedContact] = useState("")
 	const onAddContact = (contact) => {
 		const finalContact = {
 			...contact,
@@ -20,14 +21,27 @@ const App = () => {
 		setUsers([finalContact, ...contacts,]);
 		console.log(finalContact, contact);
 	}
+	const onDeleteContact = (contactId) => {
+		setUsers(users.filter(item => item.id !== contactId))
+		
+	}
+	const handleSearch = (event) => {
+		const value = event.target.value;
+		setSearchedContact(value)
+	}
+	const filteredContacts = users.filter((contact)=> contact.name.toLowerCase().includes(searchedContact.toLowerCase()))
 	return (
 		<div>
 			<h1>Phonebook</h1>
-			<ContactForm
-				onAddContact={onAddContact} />
-				<SearchBox />
-				<ContactList
-					contacts={users} />
+			<ContactForm onAddContact={onAddContact} />
+			<SearchBox
+				handleSearch={handleSearch}
+				searchedContact={searchedContact}
+			/>
+			<ContactList
+				onDeleteContact={onDeleteContact}
+				filteredContacts={filteredContacts}
+			/>
 		</div>
 	);
 };
