@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-// import Section from "./components/Section/Section.jsx";
+import Section from "./components/Section/Section.jsx";
 import ContactForm from "./components/ContactForm/ContactForm.jsx"
-// import Notification from "./components/Notification/Notification.jsx";
 import ContactList from "./components/ContactList/ContactList.jsx";
 import SearchBox from "./components/SearchBox/SearchBox.jsx";
 import contacts from "./Contacts.json"
@@ -10,7 +9,12 @@ import { nanoid } from "nanoid";
 
 
 const App = () => {
-	const [users, setUsers] = useState(contacts)
+	const [users, setUsers] = useState(() => {
+		const contactData = localStorage.getItem("contactsData");
+		return JSON.parse(contactData) ?? contacts;
+		
+		
+	})
 	const [searchedContact, setSearchedContact] = useState("")
 	const onAddContact = (contact) => {
 		const finalContact = {
@@ -18,13 +22,19 @@ const App = () => {
 			id: nanoid(),
 		}
 
-		setUsers([finalContact, ...contacts,]);
-		console.log(finalContact, contact);
+		setUsers((prevContacts)=> [finalContact, ...prevContacts,]);
+		// console.log(finalContact, contact);
 	}
+
+
 	const onDeleteContact = (contactId) => {
-		setUsers(users.filter(item => item.id !== contactId))
+		setUsers((prevContacts) => prevContacts.filter((item) => item.id !== contactId));
 		
 	}
+
+	useEffect(() => {
+		localStorage.setItem("contactsData", JSON.stringify(users))
+	},[users])
 	const handleSearch = (event) => {
 		const value = event.target.value;
 		setSearchedContact(value)
@@ -33,15 +43,21 @@ const App = () => {
 	return (
 		<div>
 			<h1>Phonebook</h1>
-			<ContactForm onAddContact={onAddContact} />
-			<SearchBox
-				handleSearch={handleSearch}
-				searchedContact={searchedContact}
-			/>
-			<ContactList
-				onDeleteContact={onDeleteContact}
-				filteredContacts={filteredContacts}
-			/>
+			<Section>
+				<ContactForm onAddContact={onAddContact} />
+			</Section>
+			<Section>
+				<SearchBox
+					handleSearch={handleSearch}
+					searchedContact={searchedContact}
+				/>
+			</Section>
+			<Section>
+				<ContactList
+					onDeleteContact={onDeleteContact}
+					filteredContacts={filteredContacts}
+				/>
+			</Section>
 		</div>
 	);
 };
