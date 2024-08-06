@@ -5,7 +5,7 @@ const SearchBox = ({ searchedContact, handleSearch,}) => {
 	return (
 		<div>
 			<p className={css.searchTxt}>Find contact by name</p>
-			<input
+			<input className={css.input}
 				type='text'
 				value={searchedContact}
 				onChange={handleSearch}

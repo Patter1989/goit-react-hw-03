@@ -5,15 +5,16 @@ ul{
 .contactWrapper{
   border: 1px solid black;
   border-radius: 4px;
-  width: 200px;
+  width: 180px;
   padding: 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  
 }
 .contactList{}
 .contactItem{
+  font-size: 14px;
   display: flex;
   gap: 3px;
 

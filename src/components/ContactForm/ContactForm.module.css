@@ -1,4 +1,6 @@
 .form {
+  box-sizing: border-box;
+  width: 300px;
   display: flex;
   flex-direction: column;
   border: 1px solid black;
@@ -14,10 +16,13 @@ p {
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
 .addContactBtn{
+  margin: 0 auto;
   cursor: pointer;
+  width: 150px;
 }
 
 .errorText {
