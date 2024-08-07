@@ -5,10 +5,18 @@ import ContactList from "./components/ContactList/ContactList.jsx";
 import SearchBox from "./components/SearchBox/SearchBox.jsx";
 import contacts from "./Contacts.json"
 import { nanoid } from "nanoid";
+import Modal from "./components/Modal/Modal.jsx"
 
 
 
 const App = () => {
+	const [modal, setModal] = useState(false)
+	const onOpenModal = () => {
+		setModal(true)
+	}
+	const onCloseModal = () => {
+		setModal(false);
+	};
 	const [users, setUsers] = useState(() => {
 		const contactData = localStorage.getItem("contactsData");
 		return JSON.parse(contactData) ?? contacts;
@@ -42,7 +50,14 @@ const App = () => {
 	const filteredContacts = users.filter((contact)=> contact.name.toLowerCase().includes(searchedContact.toLowerCase()))
 	return (
 		<div>
+			{modal && <Modal onCloseModal={onCloseModal} />}
 			<h1>Phonebook</h1>
+			<button
+				type='button'
+				onClick={onOpenModal}
+			>
+				Modal
+			</button>
 			<Section>
 				<ContactForm onAddContact={onAddContact} />
 			</Section>
